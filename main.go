@@ -1,5 +1,4 @@
 package main
-
 import (
 	"fmt"
 	"math"
@@ -8,50 +7,52 @@ import (
 	"strconv"
 	"strings"
 )
-
-func main() {
-	args, _ := os.ReadFile(os.Args[1])
-	numb := StrToFloat(string(args))
-	fmt.Println("Average:", math.Round(average(numb)))
-	fmt.Println("Mediana:", math.Round(median(numb)))
-	fmt.Println("Variance:", math.Round(variance(numb)))
-	fmt.Println("Standard Deviation:", math.Round(Deviation(numb)))
-}
-func StrToFloat(s string) []float64 {
-	arr := strings.Split(s, "\n")
-	res := make([]float64, len(arr)-1)
-	for i := range res {
-		res[i], _ = strconv.ParseFloat(arr[i], 64)
+func main() {	
+	data, err := os.ReadFile("data.txt")  			
+		if err != nil {
+			fmt.Println(err)
+		}	
+	
+	line := string(data) 								
+	str := strings.Split(line, "\r\n")
+	
+	var f []float64 
+		for _, data1 := range str  {						
+			num, err := strconv.ParseFloat(data1, 64) 
+			if err != nil {
+				fmt.Println(err)
+				}			
+			f = append(f, num)							
+		}	
+		fmt.Println(count(f))
+	}	
+func count(data []float64) float64 {
+    dataCopy := make([]float64, len(data))
+    copy(dataCopy, data)
+    sort.Float64s(dataCopy)
+	var sum float64 = 0							
+	for i := 0; i < len(dataCopy); i++ {
+		sum += dataCopy[i]
 	}
-	return res
-}
-func average(data []float64) float64 {
-	var sum float64
-	for _, j := range data {
-		sum += j
-	}
-	return sum / float64(len(data))
-}
-func median(data []float64) float64 {
-	sort.Float64s(data)
-	var med float64
-	if len(data) == 0 {
-		return 0
-	} else if len(data)%2 == 0 {
-		med = (data[len(data)/2-1] + data[len(data)/2]) / 2
-	} else {
-		med = data[len(data)/2-1]
-	}
-	return med
-}
-func variance(data []float64) float64 {
-	var sumVar float64
-	for _, j := range data {
-		sumVar += math.Pow(j, 2)
-	}
-	result := sumVar/float64(len(data)) - math.Pow(average(data), 2)
-	return result
-}
-func Deviation(data []float64) float64 {
-	return math.Sqrt(variance(data))
-}
+	var average float64 = sum / float64(len(dataCopy)) 		
+	fmt.Println("Average:\n", math.Round(average))
+    var median float64                                
+    l := len(dataCopy)
+    if l == 0 {
+        return 0
+    } else if l%2 == 0 {										
+        median = (dataCopy[l/2-1] + dataCopy[l/2]) / 2
+    } else {
+        median = dataCopy[l/2]
+    }
+	fmt.Println("Median:\n", math.Round(median))
+	var sd float64
+    for j := 0; j < 10; j++ {	
+        sd += math.Pow(dataCopy[j] - average, 2)	
+		fmt.Println(sd)		
+    }
+	fmt.Println("Variance:\n", math.Round(sd))
+    sd = math.Sqrt(sd/10)						
+	fmt.Println("Standard Deviation:")
+	return math.Round(sd)
+} 
