@@ -37,7 +37,7 @@ func count(data []float64) float64 {
 		sum += dataCopy[i]
 	}
 	var average float64 = sum / float64(len(dataCopy))
-	fmt.Println("Average:\n", math.Round(average))
+	fmt.Println("Average:", math.Round(average))
 	var median float64
 	l := len(dataCopy)
 	if l == 0 {
@@ -47,14 +47,14 @@ func count(data []float64) float64 {
 	} else {
 		median = dataCopy[l/2]
 	}
-	fmt.Println("Median:\n", math.Round(median))
+	fmt.Println("Median:", math.Round(median))
 	var sd float64
 	for j := 0; j < l; j++ {
 		sd += math.Pow(dataCopy[j]-average, 2)
-		fmt.Println(sd)
+		//fmt.Println(sd)
 	}
-	fmt.Println("Variance:\n", math.Round(sd))
+	fmt.Println("Variance:", math.Round(sd))
 	sd = math.Sqrt(sd / 10)
-	fmt.Println("Standard Deviation:")
+	fmt.Println("Standard Deviation:", math.Round(sd))
 	return math.Round(sd)
 }

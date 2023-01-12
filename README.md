@@ -8,4 +8,5 @@ How it should be:
 
 Average: 33 Median: 32 Variance: 4519 Standard Deviation: 21
 
-What numbers should be used for the previous result 8 60 31 24 45 18 32 72 9 12 46 35
+What numbers should be used for the previous result
+82 60 31 24 48 18 32 72 98 13 24 53 55 78 89 350 85 345 67 70 86 44 50
