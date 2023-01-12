@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 )
+//this is a test
 func main() {	
 	data, err := os.ReadFile("data.txt")  			
 		if err != nil {
